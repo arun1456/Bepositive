@@ -73,37 +73,37 @@ class DonorController extends Controller
 
     public function bgfilter(Request $request)
     {
+        if($request->bgfilter && $request->cityfilter && $request->dsfilter)
+        {
+            $donors = Donor::whereHas('city', function ($query) use ($request) {
+                $query->where('district_id', $request->dsfilter);
+            })->where('bgroup_id',$request->bgfilter)->where('city_id',$request->cityfilter)->with('bgroup')->with('city.district')->get();
+        }
         if($request->bgfilter && $request->cityfilter=='' && $request->dsfilter=='')
         {
             $donors=Donor::where('bgroup_id',$request->bgfilter)->with('bgroup')->with('city.district')->get();
         }
-        elseif($request->cityfilter && $request->dsfilter && $request->bgfilter=='')
+        if($request->cityfilter && $request->dsfilter && $request->bgfilter=='')
         {
             $donors=Donor::where('city_id',$request->cityfilter)->with('bgroup')->with('city.district')->get();
         }
-        elseif($request->cityfilter && $request->dsfilter='' && $request->bgfilter=='')
+        if($request->cityfilter && $request->dsfilter='' && $request->bgfilter=='')
         {
             $donors=Donor::where('city_id',$request->cityfilter)->with('bgroup')->with('city.district')->get();
         }
-        elseif($request->dsfilter && $request->cityfilter=='' && $request->bgfilter=='')
+        if($request->dsfilter && $request->cityfilter=='' && $request->bgfilter=='')
         {
             $donors = Donor::whereHas('city', function ($query) use ($request) {
                $query->where('district_id', $request->dsfilter);
            })->with('bgroup')->with('city.district')->get();
         }
-        elseif($request->dsfilter && $request->cityfilter=='' && $request->bgfilter)
+        if($request->dsfilter && $request->cityfilter=='' && $request->bgfilter)
         {
             $donors = Donor::whereHas('city', function ($query) use ($request) {
                $query->where('district_id', $request->dsfilter);
-           })->where('bgroup_id',$request->bgfilter)->with('bgroup')->with('city.district')->get();
+            })->where('bgroup_id',$request->bgfilter)->with('bgroup')->with('city.district')->get();
         }
-        elseif($request->bgfilter && $request->cityfilter && $request->dsfilter)
-        {
-            dd($request->bgfilter);
-            $donors = Donor::whereHas('city', function ($query) use ($request) {
-                $query->where('district_id', $request->dsfilter);
-            })->where('bgroup_id',$request->bgfilter)->where('city_id',$request->cityfilter)->with('bgroup')->with('city.district')->get();
-        }
+        
         return view('console.bgfilter',compact('donors'));
     }
 }
