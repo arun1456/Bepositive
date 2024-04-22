@@ -9,6 +9,7 @@ class AdminController extends Controller
 {
     public function admin()
     {
+
         $bgroups=Bgroup::all();
         $districts=District::all();
         return view('console.admin',compact('districts','bgroups'));
@@ -16,6 +17,7 @@ class AdminController extends Controller
 
     public function consolelogin()
     {
+        
         return view('console.console');
     }
 }

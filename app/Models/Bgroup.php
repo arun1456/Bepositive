@@ -9,4 +9,5 @@ class Bgroup extends Model
 {
     protected $table = 'bgroup';
     protected $fillable = ['bgroup'];
+    
 }

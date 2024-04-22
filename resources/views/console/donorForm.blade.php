@@ -2,15 +2,15 @@
     @csrf
     <div class="form-group">
         <label for="name">Donor Name</label>
-        <input type="text" class="form-control" id="Donor_name" name="donor_name" >
+        <input type="text" class="form-control" id="Donor_name" name="donor_name" value="{{ session()->get('donor_name') }}" required>
     </div>
     <div class="form-group">
         <label for="contact">Contact</label>
-        <input type="text" class="form-control" id="donor_contact" name="donor_contact">
+        <input type="text" class="form-control" id="donor_contact" name="donor_contact" value="{{ session()->get('donor_contact') }}" required>
     </div>
     <div class="form-group">
         <label>Select Blood Group</label>
-        <select class="form-control" name="bgroup_id">
+        <select class="form-control" name="bgroup_id" required>
             <option selected></option>
             @foreach ($bgroups as $bgroup)
             <option value="{{$bgroup->id}}">{{ $bgroup-> bgroup}}</option>
@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         <label>Select District</label>
-        <select class="form-control" id="dist-id">
+        <select class="form-control" id="dist-id" required>
             <option selected></option>
             @foreach ($districts as $district)
             <option value="{{ $district->id }}">{{ $district-> district_name }}</option>
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group selectDist">
         <label>Select City</label>
-        <select class="form-control" name="city_id">
+        <select class="form-control" name="city_id" required>
             <option selected>Please select district</option>
         </select>
     </div>
@@ -67,15 +67,19 @@
                         success: function (response){
                             donorForm();
                             donorTable();
-                            console.log(response)
+                            if(response==='exists'){
+                                $('.exists').hide();
+                            }
+                            else{
+                                $('.exists').show();
+                            }
                         },
                         error: function (xhr,status,error){
-                            var errorMessage = xhr.responseJson.message;
+                            var errorMessage = xhr.responseJSON.message;
                             alert(errorMessage);
                         }
                     });
                 });
-
             });
             function donorForm()
             {

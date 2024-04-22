@@ -58,6 +58,9 @@
   <div class="col-lg-12 grid-margin stretch-card">
     <div class="card" id="dnor-Form" style="display:none;">
       <div class="card-body">
+      <div class="alert alert-success exists" role="alert" style="display:none;">
+                            Contact number already exists!
+                        </div>
         <h4 class="card-title">Add Donors</h4>
         <p class="card-description">
           Add donor to view in the table.
