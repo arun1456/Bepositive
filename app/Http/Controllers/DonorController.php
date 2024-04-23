@@ -119,4 +119,14 @@ class DonorController extends Controller
         }
         return view('console.bgfilter',compact('donors'));
     }
+    public function export()
+    {
+        return Excel::download(new UserExport, 'users.xlsx');
+    }
+
+    public function import()
+    {
+        Excel::import(new UserImport,request()->file('file'));
+        return back();
+    }
 }

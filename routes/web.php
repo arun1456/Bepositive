@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function ()
     Route::post('/bgfilter', [DonorController::class, 'bgfilter'])->name('donor.bgfilter');
     Route::get('/selectcity/{id}', [DonorController::class, 'selCity'])->name('donor.selcity');
     Route::get('/selectdiv', [DonorController::class, 'selDiv'])->name('donor.selDiv');
+    Route::get('/userimport', [DonorController::class, 'import'])->name('user.import');
+    Route::get('/userexport', [DonorController::class, 'export'])->name('user.export');
 
 });
 
